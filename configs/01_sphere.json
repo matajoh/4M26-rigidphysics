@@ -1,0 +1,54 @@
+{
+    "seed": 0,
+    "scale": 10,
+    "restitution": 1.0,
+    "static_friction": 0,
+    "dynamic_friction": 0,
+    "gravity": [
+        0,
+        0,
+        0
+    ],
+    "cursor": {
+        "enabled": false
+    },
+    "mode": "basic",
+    "bounds": {
+        "enabled": true,
+        "scale": 10
+    },
+    "bodies": [
+        {
+            "name": "sphere",
+            "max_count": 20,
+            "size": {
+                "min": 1,
+                "max": 2.5
+            },
+            "position": {
+                "min": [
+                    -4,
+                    -4,
+                    -4
+                ],
+                "max": [
+                    4,
+                    4,
+                    4
+                ]
+            },
+            "velocity": {
+                "min": [
+                    -3,
+                    -3,
+                    -3
+                ],
+                "max": [
+                    3,
+                    3,
+                    3
+                ]
+            }
+        }
+    ]
+}

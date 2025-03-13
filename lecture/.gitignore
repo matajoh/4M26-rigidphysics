@@ -1,0 +1,13 @@
+collide
+*.html
+*.png
+*.mp4
+*.svg
+snapshot*
+
+# Latex
+*.aux
+*.fdb*
+*.fls
+*.pdf
+*.synctex.gz

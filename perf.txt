@@ -1,0 +1,114 @@
+start
+
+Time per op: 0.0208ms
+compiling...
+starting
+# collisions: 10000
+# contacts: 4.05
+Time per collide: 0.1002ms
+Time per contacts: 1.5331ms
+Time per resolve: 1.2455ms
+
+
+after physics JIT
+
+Time per op: 0.0241ms
+compiling...
+starting
+# collisions: 10000
+# contacts: 4.04
+Time per collide: 0.1138ms
+Time per contacts: 1.6414ms
+Time per resolve: 0.0303ms
+
+
+after contacts and math JIT
+
+Time per op: 0.2770ms
+compiling...
+starting
+# collisions: 10000
+# contacts: 4.04
+Time per collide: 0.0907ms
+Time per contacts: 0.0522ms
+Time per resolve: 0.0165ms
+
+
+after collision JIT
+
+Time per op: 0.0199ms
+compiling...
+starting
+# collisions: 10000
+# contacts: 4.04
+Time per collide: 0.0069ms
+Time per contacts: 0.0466ms
+Time per resolve: 0.0156ms
+
+
+Part 2: detection
+
+# detections: 51633
+# collisions: 44189
+# contacts: 3.03
+Time per update: 6.4367ms
+Time per detect: 524.7556ms
+Time per collide: 0.0065ms
+Time per contacts: 0.0319ms
+Time per resolve: 0.0190ms
+
+After update transform JIT
+# detections: 5150
+# collisions: 4408
+# contacts: 3.05
+Time per update: 3.0462ms
+Time per detect: 533.5760ms
+Time per collide: 0.0062ms
+Time per contacts: 0.0194ms
+Time per resolve: 0.0140ms
+
+After minor optimization
+
+BASIC
+# detections: 20744
+# collisions: 16635
+# contacts: 3.01
+Time per update: 5.9218ms
+Time per detect: 121.5914ms
+Time per collide: 0.0064ms
+Time per contacts: 0.0200ms
+Time per resolve: 0.0155ms
+
+SPATIAL HASHING
+# detections: 22533
+# collisions: 17201
+# contacts: 3.03
+Time per update: 5.7969ms
+Time per detect: 51.9947ms
+Time per collide: 0.0062ms
+Time per contacts: 0.0204ms
+Time per resolve: 0.0149ms
+
++ JIT
+
+BASIC
+# detections: 20542
+# collisions: 16516
+# contacts: 3.03
+Time per step: 76.9473ms
+Time per update: 5.3351ms
+Time per detect: 2.5137ms
+Time per collide: 12.5946ms
+Time per contacts: 32.8758ms
+Time per resolve: 23.6281ms
+
+SPATIAL HASHING
+# detections: 22158
+# collisions: 16864
+# contacts: 3.05
+Time per step: 79.8892ms
+Time per update: 6.0814ms
+Time per detect: 1.2930ms
+Time per collide: 13.4471ms
+Time per contacts: 34.5201ms
+Time per resolve: 24.5477ms
