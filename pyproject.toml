@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools >= 64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name =  "rigidphysics"
+version = "0.1.0"
+authors = [
+    { name="Matthew Johnson", email="mj293@cam.ac.uk" },
+]
+description = "3D rigid body physical simulation covered as part of Part IIB: 4M26"
+dependencies = [
+    "numba==0.60.0",
+    "numpy",
+    "scipy",
+    "pyglet",
+    "pygame"
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest", "tqdm", "scenepic"
+]
+lecture = [
+    "matplotlib", "opencv-python", "drawsvg[all]"
+]
+
+[project.scripts]
+simulation = "rigidphysics:main"
+simulation-flat = "rigidphysics.flat:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+rigidphysics = ["assets/*.obj"]

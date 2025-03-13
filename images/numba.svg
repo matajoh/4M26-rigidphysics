@@ -1,0 +1,72 @@
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden">
+    <defs>
+        <clipPath id="clip0">
+            <rect x="232" y="232" width="3936" height="2011" />
+        </clipPath>
+    </defs>
+    <g transform="scale(0.2)">
+        <g clip-path="url(#clip0)" transform="translate(-232 -232)">
+            <g>
+                <path
+                    d="M574.5 1615.55 4117.5 1615.55M574.5 1241.54 4117.5 1241.54M574.5 866.529 4117.5 866.529M574.5 492.5 4117.5 492.5"
+                    stroke="#D9D9D9" stroke-width="3.4375" stroke-linejoin="round" stroke-miterlimit="10" fill="none" />
+            </g>
+            <g>
+                <path
+                    d="M720.024 578.019 852.028 578.019 852.028 1990 720.024 1990ZM1310.04 1920.06 1443.05 1920.06 1443.05 1990 1310.04 1990ZM1901.06 1313.04 2033.07 1313.04 2033.07 1990 1901.06 1990ZM2491.08 1144.04 2623.09 1144.04 2623.09 1990 2491.08 1990ZM3081.1 695.023 3214.11 695.023 3214.11 1990 3081.1 1990ZM3672.12 704.023 3804.12 704.023 3804.12 1990 3672.12 1990Z"
+                    fill="#156082" />
+            </g>
+            <g>
+                <path
+                    d="M888.029 1271.04 1020.03 1271.04 1020.03 1990 888.029 1990ZM1478.05 1949.06 1611.05 1949.06 1611.05 1990 1478.05 1990ZM2069.07 1967.06 2201.07 1967.06 2201.07 1990 2069.07 1990ZM2659.09 1590.05 2791.09 1590.05 2791.09 1990 2659.09 1990ZM3250.11 1425.05 3382.11 1425.05 3382.11 1990 3250.11 1990ZM3840.13 1404.05 3972.13 1404.05 3972.13 1990 3840.13 1990Z"
+                    fill="#E97132" />
+            </g>
+            <g>
+                <path d="M574.5 1990.5 4117.5 1990.5" stroke="#D9D9D9" stroke-width="3.4375" stroke-linejoin="round"
+                    stroke-miterlimit="10" fill="none" fill-rule="evenodd" />
+            </g>
+            <g><text fill="#595959" font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="400" font-size="55"
+                    transform="matrix(1 0 0 1 494.917 2006)">1</text></g>
+            <g><text fill="#595959" font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="400" font-size="55"
+                    transform="matrix(1 0 0 1 465.606 1631)">10</text></g>
+            <g><text fill="#595959" font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="400" font-size="55"
+                    transform="matrix(1 0 0 1 436.296 1257)">100</text></g>
+            <g><text fill="#595959" font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="400" font-size="55"
+                    transform="matrix(1 0 0 1 406.985 882)">1000</text></g>
+            <g><text fill="#595959" font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="400" font-size="55"
+                    transform="matrix(1 0 0 1 377.675 508)">10000</text></g>
+            <g><text fill="#595959" font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="400" font-size="55"
+                    transform="matrix(1 0 0 1 815.855 2077)">Step</text></g>
+            <g><text fill="#595959" font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="400" font-size="55"
+                    transform="matrix(1 0 0 1 1373.15 2077)">Update</text></g>
+            <g><text fill="#595959" font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="400" font-size="55"
+                    transform="matrix(1 0 0 1 1971.06 2077)">Detect</text></g>
+            <g><text fill="#595959" font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="400" font-size="55"
+                    transform="matrix(1 0 0 1 2556.54 2077)">Collide</text></g>
+            <g><text fill="#595959" font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="400" font-size="55"
+                    transform="matrix(1 0 0 1 3122.44 2077)">Contacts</text></g>
+            <g><text fill="#595959" font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="400" font-size="55"
+                    transform="matrix(1 0 0 1 3731.19 2077)">Physics</text></g>
+            <g><text fill="#595959" font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="400" font-size="61"
+                    transform="matrix(6.12323e-17 -1 1 6.12323e-17 346.508 1335)">Log </text></g>
+            <g><text fill="#595959" font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="400" font-size="61"
+                    transform="matrix(6.12323e-17 -1 1 6.12323e-17 346.508 1229)">ms</text></g>
+            <g><text fill="#595959" font-family="Monaspace Neon Var,Monaspace Neon Var_MSFontService,sans-serif"
+                    font-style="italic" font-weight="400" font-size="128"
+                    transform="matrix(1 0 0 1 1638.98 393)">numba</text></g>
+            <g><text fill="#595959" font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="400" font-size="128"
+                    transform="matrix(1 0 0 1 2062.89 393)">optimisation</text></g>
+            <g>
+                <rect x="1959" y="2153" width="29.9999" height="30.0002" fill="#156082" />
+            </g>
+            <g><text fill="#595959" font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="400" font-size="55"
+                    transform="matrix(1 0 0 1 2002.25 2184)">Plain</text></g>
+            <g>
+                <rect x="2170" y="2153" width="30" height="30.0002" fill="#E97132" />
+            </g>
+            <g><text fill="#595959" font-family="Aptos,Aptos_MSFontService,sans-serif" font-weight="400" font-size="55"
+                    transform="matrix(1 0 0 1 2213.44 2184)">Optimised</text></g>
+        </g>
+    </g>
+</svg>

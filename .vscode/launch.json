@@ -1,0 +1,71 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Test Contacts",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "test/test_contacts.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Test Collide",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "test/test_collide.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Test Quaternions",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "test/test_quaternions.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Test Detection",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "test/test_detection.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Test QuadTree",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "test/test_quadtree.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Time Tests",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "test/test_timing.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Simulation",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "debug.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Simulation-Flat",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "debug-flat.py",
+            "console": "integratedTerminal"
+        },
+    ]
+}

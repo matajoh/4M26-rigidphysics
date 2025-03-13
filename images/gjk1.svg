@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="1600" height="900.0" viewBox="-8.0 -4.5 16 9">
+<defs>
+</defs>
+<path d="M-7.9,0 L-0.1,0" stroke="gray" stroke-width="0.1" />
+<path d="M-4.0,-3.9 L-4.0,3.9" stroke="gray" stroke-width="0.1" />
+<circle cx="-4.0" cy="0" r="0.2" fill="gray" />
+<path d="M5.490857330457485,1.1232532001854638 L3.239818230420698,1.176384830177148 L4.319324439121817,-0.7996380303626118 Z" fill="none" stroke="rgb(255, 0, 0)" stroke-width="0.1" />
+<path d="M4.9700998667618626,-0.20199600380740818 L3.6708671997968008,0.9902363571036641 L2.1355018702750796,0.12301272376829875 L2.4858265784475346,-1.6051933183912064 L4.237704484718722,-1.8060597586733484 Z" fill="none" stroke="rgb(0, 255, 0)" stroke-width="0.1" />
+<path d="M-4.997886254298024,2.9824445888504965 L-5.730281636341164,1.3783808339845562 L-4.6507754276400455,-0.5976420265552036 L-3.3515427606749837,-1.789874387466276 L-1.8161774311532626,-0.9226507541309106 L-0.6446445398175951,1.000240476417165 L-0.99496924799005,2.7284465185766704 L-2.7468471542612374,2.9293129588588123 Z" fill="none" stroke="black" stroke-width="0.1" />
+<path d="M-5.730281636341164,1.3783808339845562 L-1.8161774311532626,-0.9226507541309106 L-0.99496924799005,2.7284465185766704 Z" fill="none" stroke="blue" stroke-width="0.1" />
+<text x="-2.616640556522045" y="0.9635822760669138" font-size="0.4" font-weight="bold" fill="cyan" text-anchor="middle" dominant-baseline="middle">d1</text>
+<path d="M-1.1166405565220452,0.9635822760669138 L-2.016640556522045,0.9635822760669138" stroke="cyan" stroke-width="0.1" />
+<path d="M-2.316640556522045,0.9635822760669138 L-2.016640556522045,0.7635822760669138 L-2.016640556522045,1.163582276066914 Z" fill="cyan" />
+<circle cx="3.239818230420698" cy="1.176384830177148" r="0.15" fill="cyan" stroke="gray" stroke-width="0.05" />
+<circle cx="4.9700998667618626" cy="-0.20199600380740818" r="0.15" fill="cyan" stroke="gray" stroke-width="0.05" />
+<circle cx="-5.730281636341164" cy="1.3783808339845562" r="0.15" fill="cyan" stroke="gray" stroke-width="0.05" />
+<text x="-6.230281636341164" y="1.3783808339845562" font-size="0.4" font-weight="bold" fill="cyan" text-anchor="middle" dominant-baseline="middle">v1</text>
+<text x="-4.55704779194142" y="0.4437566601291001" font-size="0.4" font-weight="bold" fill="magenta" text-anchor="middle" dominant-baseline="middle">d2</text>
+<path d="M-5.730281636341164,1.3783808339845562 L-5.026341329701317,0.8176063296712826" stroke="magenta" stroke-width="0.1" />
+<path d="M-4.791694560821369,0.6306814949001913 L-4.901724773187256,0.9740375089245819 L-5.150957886215378,0.6611751504179832 Z" fill="magenta" />
+<circle cx="4.319324439121817" cy="-0.7996380303626118" r="0.15" fill="magenta" stroke="gray" stroke-width="0.05" />
+<circle cx="2.1355018702750796" cy="0.12301272376829875" r="0.15" fill="magenta" stroke="gray" stroke-width="0.05" />
+<circle cx="-1.8161774311532626" cy="-0.9226507541309106" r="0.15" fill="magenta" stroke="gray" stroke-width="0.05" />
+<text x="-1.425099483020014" y="-1.2341921454160627" font-size="0.4" font-weight="bold" fill="magenta" text-anchor="middle" dominant-baseline="middle">v2</text>
+<text x="-3.0130387300627133" y="1.5209659416330714" font-size="0.4" font-weight="bold" fill="orange" text-anchor="middle" dominant-baseline="middle">d3</text>
+<path d="M-3.7732295337472133,0.22786503992682283 L-3.317115051536513,1.0037255809505723" stroke="orange" stroke-width="0.1" />
+<path d="M-3.165076890799613,1.2623457612918219 L-3.489528505097346,1.1050843547751723 L-3.14470159797568,0.9023668071259723 Z" fill="orange" />
+<circle cx="5.490857330457485" cy="1.1232532001854638" r="0.15" fill="orange" stroke="gray" stroke-width="0.05" />
+<circle cx="2.4858265784475346" cy="-1.6051933183912064" r="0.15" fill="orange" stroke="gray" stroke-width="0.05" />
+<circle cx="-0.99496924799005" cy="2.7284465185766704" r="0.15" fill="orange" stroke="gray" stroke-width="0.05" />
+<text x="-0.7415723134285501" y="3.1594801524787535" font-size="0.4" font-weight="bold" fill="orange" text-anchor="middle" dominant-baseline="middle">v3</text>
+</svg>

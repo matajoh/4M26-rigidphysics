@@ -1,0 +1,555 @@
+\documentclass{article}
+
+\usepackage{amsmath,graphicx}
+\usepackage{algorithmicx}
+\usepackage[noend]{algpseudocode}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\begin{document}
+
+\begin{algorithmic}
+    \Function{APrioriSimulation}{$C$, $W$}
+        \State $t \gets 0$
+        \While{\Call{IsRunning}{}}
+            \State $t' \gets \infty$
+            \For{$c \in C$}
+                \For{$w \in W$}
+                    \State $\tau \gets $ \Call{TimeOfCollision}{$c$, $w$}
+                    \If{$\tau < t'$}
+                        \State $t' \gets \tau$
+                        \State $c' \gets c$
+                        \State $w' \gets w$
+                    \EndIf
+                \EndFor
+            \EndFor
+            \State $\Delta t \gets t' - t$
+            \For{$c \in C$}
+                \State $c$.x $\gets c$.x + $c$.vx $\Delta t$
+                \State $c$.y $\gets c$.y + $c$.vy $\Delta t$
+            \EndFor
+            \If{\Call{IsHorizontal}{$w'$}}
+                \State $c$.vy $\gets$ -$c$.vy
+            \Else
+                \State $c$.vx $\gets$ -$c$.vx
+            \EndIf
+            \State $t \gets t'$
+        \EndWhile
+    \EndFunction
+\end{algorithmic}
+
+\newpage
+
+\begin{algorithmic}
+    \Function{TimeOfCollision}{$c$, $w$}
+        \If{\Call{IsHorizontal}{$w$}}
+            \State $p \gets$ $c$.y
+            \State $v \gets$ $c$.vy
+        \Else
+            \State $p \gets$ $c$.x
+            \State $v \gets$ $c$.vx
+        \EndIf
+
+        \If{$w$.p $< p$}
+            \State $g \gets p - c$.r $- w$.p
+            \State $v \gets -v$
+        \Else
+            \State $g \gets w$.p $- p - c$.r
+        \EndIf
+
+        \If{$v \leq 0$}
+            \State \Return $\infty$
+        \EndIf
+
+        \State $t \gets \frac{g}{v}$
+        \If{$t < 0$}
+            \State \Return $\infty$
+        \EndIf
+
+        \State \Return $t$
+    \EndFunction
+\end{algorithmic}
+
+\newpage
+
+\begin{algorithmic}
+    \Function{APosterioriSimulationStep}{$B$, $\Delta t$, g}
+        \State $t \gets 0$
+        \While{\Call{IsRunning}{}}
+            \For{$b \in B$}
+                \State $b$.v$ \gets b$.v + g$ \Delta t$
+                \State $b$.p$ \gets b$.p + $b$.$v \Delta t$
+                \State $b$.$\theta \gets b$.$\theta + b.\omega \Delta t$
+            \EndFor
+
+            \State $C \gets$ \Call{BroadPhase}{$B$}
+            \State \Call{NarrowPhase}{$C$}
+        \EndWhile
+    \EndFunction
+\end{algorithmic}
+
+\newpage
+
+\begin{algorithmic}
+    \Function{BroadPhase}{$B$}
+        \State $C \gets \emptyset$
+        \For{$i \in \{1, \ldots, |B| - 1\}$}
+            \State $a \gets B[i]$
+            \For{$j \in \{i + 1, \ldots, |B|\}$}
+                \State $b \gets B[j]$
+                \State $c \gets$ \Call{IntersectBodies}{$a$, $b$}
+                \If{$c \neq ()$}
+                    \State $C \gets C \cup (a, b, c)$
+                \EndIf
+            \EndFor
+        \EndFor
+        \State \Return $C$
+    \EndFunction
+\end{algorithmic}
+
+\begin{algorithmic}
+    \Function{NarrowPhase}{$C$}
+        \For{$(a, b, c) \in C$}
+            \State $a$.p $\gets a$.p $- \frac{1}{2}c.$n $c$.d
+            \State $b$.p $\gets b$.p $+ \frac{1}{2}c.$n $c$.d
+            \State $P \gets$ \Call{FindContactPoints}{$a$, $b$, $c$}
+            \State \Call{ResolveCollision}{$a$, $b$, $c$, $P$}
+        \EndFor
+    \EndFunction
+\end{algorithmic}
+
+\newpage
+
+\begin{algorithmic}
+    \Function{IntersectCircleCircle}{$a$, $b$}
+        \State $\vec{ab} \gets b$.p $- a$.p
+        \If{$\vec{ab} \cdot \vec{ab} > (a$.r $+ b$.r$)^2$}
+            \State \Return $()$
+        \EndIf
+
+        \State $d \gets |\vec{ab}|$
+        \State $n \gets \frac{\vec{ab}}{d}$
+        \State $d \gets a$.r $+ b$.r$ - d$
+        \State \Return $(n, d)$
+    \EndFunction
+\end{algorithmic}
+
+\newpage
+
+\begin{algorithmic}
+    \Function{IntersectCircleCircle}{$a$, $b$}
+        \State $\vec{ab} \gets b$.p $- a$.p
+        \If{$\vec{ab} \cdot \vec{ab} > (a$.r $+ b$.r$)^2$}
+            \State \Return $()$
+        \EndIf
+
+        \State $d \gets |\vec{ab}|$
+        \State $n \gets \frac{\vec{ab}}{d}$
+        \State $d \gets a$.r $+ b$.r$ - d$
+        \State \Return $(n, d)$
+    \EndFunction
+\end{algorithmic}
+
+\newpage
+
+\begin{algorithmic}
+    \Function{IntersectRectangleRectangle}{$a$, $b$}
+        \State $N \gets$ \Call{GetNormals}{$a$} $\cup$ \Call{GetNormals}{$b$}
+        \State $d' \gets \infty$
+        \For{$n \in N$}
+            \State $a_{min}, a_{max} \gets$ \Call{ProjectRectangle}{$a$, $n$}
+            \State $b_{min}, b_{max} \gets$ \Call{ProjectRectangle}{$b$, $n$}
+            \If{$a_{max} < b_{min}$ or $b_{max} < a_{min}$}
+                \State \Return $()$
+            \EndIf
+
+            \State $d \gets \min(a_{max} - b_{min}, b_{max} - a_{min})$
+            \If{$d < d'$}
+                \State $d' \gets d$
+                \State $n' \gets n$
+            \EndIf
+        \EndFor
+
+        \State dp $\gets b$.p - $a$.p
+        \If{dp $\cdot~ n < 0$}
+            \State $n' \gets -n'$
+        \EndIf
+
+        \State \Return $n'$, $d'$
+    \EndFunction
+\end{algorithmic}
+
+\newpage
+
+\begin{algorithmic}
+    \Function{IntersectCircleRectangle}{$a$, $b$}
+        \State $p \gets$ \Call{ClosestVertex}{$a$.p, $b$}
+        \State $n \gets p - a$.p
+        \State $n \gets \frac{n}{|n|}$
+        \State $N \gets \{n\}~\cup$ \Call{GetNormals}{$b$}
+        \State $d' \gets \infty$
+        \For{$n \in N$}
+            \State $a_{min}, a_{max} \gets$ \Call{ProjectCircle}{$a$, $n$}
+            \State $b_{min}, b_{max} \gets$ \Call{ProjectRectangle}{$b$, $n$}
+            \If{$a_{max} < b_{min}$ or $b_{max} < a_{min}$}
+                \State \Return $()$
+            \EndIf
+
+            \State $d \gets \min(a_{max} - b_{min}, b_{max} - a_{min})$
+            \If{$d < d'$}
+                \State $d' \gets d$
+                \State $n' \gets n$
+            \EndIf
+        \EndFor
+
+        \State dp $\gets b$.p - $a$.p
+        \If{dp $\cdot~ n < 0$}
+            \State $n' \gets -n'$
+        \EndIf
+
+        \State \Return $n'$, $d'$
+    \EndFunction
+\end{algorithmic}
+
+\newpage
+
+\begin{algorithmic}
+    \Function{ClosestPointOnCube}{$p$, $b$}
+        \State $p' \gets p - b$.p
+        \State $x', y', z' \gets b$.$A^{-1} p'$
+        \State $w, h, d \gets b$.size
+        \State $x_{min} \gets -\frac{w}{2}$
+        \State $x_{max} \gets \frac{w}{2}$
+        \State $y_{min} \gets -\frac{h}{2}$
+        \State $y_{max} \gets \frac{h}{2}$
+        \State $z_{min} \gets -\frac{d}{2}$
+        \State $z_{max} \gets \frac{d}{2}$
+        \State $x' \gets \min(\max(x', x_{min}), x_{max})$
+        \State $y' \gets \min(\max(y', y_{min}), y_{max})$
+        \State $z' \gets \min(\max(z', z_{min}), z_{max})$
+        \State $p' \gets x', y', z'$
+        \State $p' \gets b$.p + $b$.A$p'$
+        \State \Return $p'$
+    \EndFunction
+\end{algorithmic}
+
+
+\newpage
+
+\begin{algorithmic}
+    \Function{FindContactPointsRectangleRectangle}{$a$, $b$, $c$}
+        \State $d_{min} \gets \infty$
+        \State $M \gets \emptyset$
+        \State $V_a, V_b \gets$ \Call{GetVertices}{$a$, $b$}
+        \For{$(v_1, v_2) \in V_a$}
+            \For{$v \in V_b$}
+                \State $d \gets $ \Call{PointSegmentDistance}{$v$, $v_1$, $v_2$}
+                \State $M, d_{min} \gets$ \Call{UpdateContacts}{$v$, $d$, $d_{min}$, $M$}
+            \EndFor
+        \EndFor
+
+        \For{$(v_1, v_2) \in V_b$}
+            \For{$v \in V_a$}
+                \State $d \gets $ \Call{PointSegmentDistance}{$v$, $v_1$, $v_2$}
+                \State $M, d_{min} \gets$ \Call{UpdateContacts}{$v$, $d$, $d_{min}$, $M$}
+            \EndFor
+        \EndFor
+
+        \State \Return $M$
+    \EndFunction
+\end{algorithmic}
+
+\newpage
+
+\begin{algorithmic}
+    \Function{UpdateContacts}{$p$, $d$, $d_{min}$, $M$}
+        \If{$d < d_{min} - \epsilon$}
+            \State $M \gets \{p\}$
+            \State $d_{min} \gets d$
+        \ElsIf{$d < d_{min} + \epsilon$}
+            \State $M \gets M \cup \{p\}$
+        \EndIf
+        \State \Return $M$, $d_{min}$
+    \EndFunction
+    \Statex
+    \Function{PointSegmentDistance}{$p$, $a$, $b$}
+        \State $d \gets \dfrac{(p - a) \cdot (b - a)}{(b - a) \cdot (b - a)}$
+        \If{$d < 0$}
+            \State $c \gets a$
+        \ElsIf{$d > 1$}
+            \State $c \gets b$
+        \Else
+            \State $c \gets a + d (b - a)$
+        \EndIf
+        \State \Return $|p - c|$
+    \EndFunction
+\end{algorithmic}
+
+\newpage
+
+\begin{algorithmic}
+    \Function{FindContactPointsCuboidCuboid}{$a$, $b$, $c$}
+        \State $d_{min} \gets \infty$
+        \State $M \gets \emptyset$
+        \State $V_a, V_b \gets$ \Call{GetVertices}{$a$, $b$}
+        \For{$v \in V_b$}
+            \State $p \gets$ \Call{ClosestPointOnCube}{$v$, $a$}
+            \State $d \gets |p - v|$
+            \State $M, d_{min} \gets$ \Call{UpdateContacts}{$v$, $d$, $d_{min}$, $M$}
+        \EndFor
+        \For{$v \in V_a$}
+            \State $p \gets$ \Call{ClosestPointOnCube}{$v$, $b$}
+            \State $d \gets |p - v|$
+            \State $M, d_{min} \gets$ \Call{UpdateContacts}{$v$, $d$, $d_{min}$, $M$}
+        \EndFor
+        \State $E_a, E_b$ $\gets$ \Call{GetEdges}{$a$, $b$}
+        \For{$e_a \in E_a$}
+            \For{$e_b \in E_b$}
+                \State $p_a, p_b \gets$ \Call{ClosestPointsOnEdges}{$e_a$, $e_b$}
+                \State $d \gets |p_a - p_b|$
+                \State $v \gets \frac{p_a + p_b}{2}$
+                \State $M, d_{min} \gets$ \Call{UpdateContacts}{$v$, $d$, $d_{min}$, $M$}
+            \EndFor
+        \EndFor
+        \State \Return $M$
+    \EndFunction
+\end{algorithmic}
+
+\newpage
+
+\begin{algorithmic}
+    \Function{ClosestPointOnEdges}{$(a, b)$, $(c, d)$}
+        \State $d_1, d_2 \gets \frac{b - a}{|b - a|}, \frac{d - c}{|d - c|}$
+        \State $n \gets d_1 \times d_2$
+        \State $n_1, n_2 \gets d_1 \times n, d_2 \times n$
+        \State $s \gets \frac{(c - a) \cdot n_2}{d_1 \cdot n_2}$
+        \State $t \gets \frac{(a - c) \cdot n_1}{d_2 \cdot n_1}$
+        \State $s \gets \max(0, \min(s, 1))$
+        \State $t \gets \max(0, \min(t, 1))$
+        \State $p_a \gets a + s (b - a)$
+        \State $p_b \gets c + t (d - c)$
+        \State \Return $p_a$, $p_b$
+    \EndFunction
+\end{algorithmic}
+
+\newpage
+\begin{algorithmic}
+    \Function{ResolveCollision}{$a$, $b$, $n$, $P$}
+        \State $e \gets \min(e_a, e_b)$
+        \State $V \gets \emptyset$
+        \State $J \gets \emptyset$
+        \For{$p_i \in P$}
+            \State $r_a \gets p_i - p_a$
+            \State $r_b \gets p_i - p_b$
+            \State $v_r \gets v_b + (\omega_b \times r_b) - v_a - (\omega_a \times r_a)$
+            \State $j_i \gets \dfrac{-(1 + e)(v_r \cdot n)}{m_a^{-1} + m_b^{-1} + I_a^{-1} (r_a \times n) + I_b^{-1} (r_b \times n)}$
+            \State $j_i \gets \frac{j_i}{|P|}$
+            \State $v_i \gets j_i \cdot n$
+            \State $V \gets V \cup v_i$
+            \State $J \gets J \cup j_i$
+        \EndFor
+
+        \For{$i \in |P|$}
+            \State $v_a \gets v_a - m_a^{-1} v_i$
+            \State $v_b \gets v_b + m_b^{-1} v_i$
+            \State $\omega_a \gets \omega_a - I_a^{-1} (r_a \times v_i)$
+            \State $\omega_b \gets \omega_b + I_b^{-1} (r_b \times v_i)$
+        \EndFor
+        \Statex
+        \State $F \gets \emptyset$
+        \For{$i \in |P|$}
+            \State $v_r \gets v_b + (\omega_b \times r_b) - v_a - (\omega_a \times r_a)$
+            \State $t \gets v_r - (v_r \cdot n) n$
+            \State $t \gets \frac{t}{|t|}$
+            \State $j_i' \gets \dfrac{-(1 + e)(v_r \cdot t)}{m_a^{-1} + m_b^{-1} + I_a^{-1} (r_a \times t) + I_b^{-1} (r_b \times t)}$
+            \State $j_i' \gets \frac{j_i'}{|P|}$
+
+            \If{$|j_i'| \leq j_i f_s$}
+                \State $f_i \gets j_i' t$
+            \Else
+                \State $f_i \gets j_i f_d t$
+            \EndIf
+            \State $F \gets F \cup f_i$
+        \EndFor
+
+        \For{$i \in |P|$}
+            \State $v_a \gets v_a - m_a^{-1} f_i$
+            \State $v_b \gets v_b + m_b^{-1} f_i$
+            \State $\omega_a \gets \omega_a - I_a^{-1} (r_a \times f_i)$
+            \State $\omega_b \gets \omega_b + I_b^{-1} (r_b \times f_i)$
+        \EndFor        
+    \EndFunction
+\end{algorithmic}
+
+\newpage
+
+\begin{algorithmic}
+    \Function{AddNode}{$n$, $d$, $v$, $d_{max}$, $t$}
+        \If{\Call{IsLeaf}{$n$}}
+            \If{$d \geq d_{max} \lor |V_n| < t$}
+                \State $V_n \gets V_n \cup \{v\}$
+                \State \Return $n$
+            \EndIf
+            \State $n \gets$ \Call{SplitNode}{$n$}
+        \EndIf
+
+        \State $i \gets $ \Call{GetQuadrant}{$n$, $v$}
+        \If{$i \neq -1$}
+            \State $c \gets$ \Call{GetChild}{$n$, $i$}
+            \State \Return \Call{AddNode}{$c$, $d$, $v$, $d_{max}$, $t$}
+        \EndIf
+        \State $V_n \gets V_n \cup \{v\}$
+        \State \Return $n$
+    \EndFunction
+    \Statex
+    \Function{Split}{$n$}
+        \State $V_n, V_1, V_2, V_3, V_4 \gets \emptyset$
+        \For{$v \in n$.$V$}
+            \State $i \gets $ \Call{GetQuadrant}{$n$, $v$}
+            \If{$i \neq -1$}
+                \State $V_i \gets V_i \cup \{v\}$
+            \Else
+                \State $V_n \gets V_n \cup \{v\}$
+            \EndIf
+        \EndFor
+        \State \Return \Call{CreateNode}{$n$, $V_n$, $V_1$, $V_2$, $V_3$, $V_4$}
+    \EndFunction
+    \Statex
+    \Function{GetQuadrant}{$n$, $v$}
+        \State $x_c, y_c \gets$ \Call{GetCenter}{$n$}
+        \State $x_1, y_1 \gets$ \Call{GetMin}{$v$}
+        \State $x_2, y_2 \gets$ \Call{GetMax}{$v$}
+        \If{$x_2 < x_c$}
+            \If{$y_2 < y_c$}
+                \State \Return 1
+            \EndIf
+            \If{$y_1 \geq y_c$}
+                \State \Return 3
+            \EndIf
+        \EndIf
+        \If{$x_1 \geq x_c$}
+            \If{$y_2 < y_c$}
+                \State \Return 2
+            \EndIf
+            \If{$y_1 \geq y_c$}
+                \State \Return 4
+            \EndIf
+        \EndIf
+        \State \Return -1
+    \EndFunction
+\end{algorithmic}
+
+\newpage
+
+\begin{algorithmic}
+    \Function{FindAllIntersections}{$n$}
+        \State $I \gets \emptyset$
+        \For{$a, b \in $ \Call{Combinations}{$V_n$, 2}}
+            \If{\Call{Intersects}{a, b}}
+                \State $I \gets I \cup (a, b)$
+            \EndIf
+        \EndFor
+
+        \If{\Call{IsLeaf}{$n$}}
+            \State \Return $I$
+        \EndIf
+
+        \For{$v \in V_n$}
+            \For{$c \in n$}
+                \State $I \gets I ~\cup$ \Call{FindIntersectionsInChild}{$c$, $v$}
+            \EndFor
+        \EndFor
+
+        \For{$c \in n$}
+            \State $I \gets I ~\cup$ \Call{FindAllIntersections}{$c$}
+        \EndFor
+
+        \State \Return $I$
+    \EndFunction
+    \Statex
+    \Function{FindIntersectionsInChild}{$n$, $v$}
+        \State $I \gets \emptyset$
+        \If{\Call{IsDisjoint}{$n$, $v$}}
+            \State \Return $I$
+        \EndIf
+
+        \For{$w \in V_c$}
+            \If{\Call{Intersects}{$v$, $w$}}
+                \State $I \gets I \cup (v, w)$
+            \EndIf
+        \EndFor
+        \If{\Call{IsLeaf}{$n$}}
+            \State \Return $I$
+        \EndIf
+        \For{$c \in n$}
+            \State $I \gets I ~\cup$ \Call{FindIntersectionsInChild}{$c$, $v$}
+        \EndFor
+        \State \Return $I$
+    \EndFunction
+\end{algorithmic}
+
+\newpage
+
+\begin{algorithmic}
+    \Function{GilbertJohnsonKeerthi}{$V_p$, $V_q$}
+        \State $d \gets $ \Call{RandomUnitVector}{}
+        \State $v_p \gets $ \Call{Support}{$V_p$, $d$}
+        \State $v_q \gets $ \Call{Support}{$V_q$, $-d$}
+        \State $v_s \gets v_p - v_q$
+        \State $V_s \gets \{v_s\}$
+        \State $d \gets $ \Call{Normalize}{$-v_s$}
+
+        \While{true}
+            \State $v_p \gets $ \Call{Support}{$V_p$, $d$}
+            \State $v_q \gets $ \Call{Support}{$V_q$, $-d$}
+            \State $v_s \gets v_p - v_q$
+            \If{$v_s \cdot d \leq 0$}
+                \State \Return false
+            \EndIf
+            \State $V_s \gets V_s \cup \{v_s\}$
+            \State $V_s$, $d$ $\gets$ \Call{NearestSimplex}{$V_s$}
+            \If{\Call{ContainsOrigin}{$V_s$}}
+                \State \Return true
+            \EndIf
+        \EndWhile
+    \EndFunction
+    \Statex
+    \Function{Support}{$V$, $d$}
+        \State \Return $\argmax_{v \in V} v \cdot d$
+    \EndFunction
+    \Statex
+    \Function{NearestSimplex}{$V$}
+        \State $V_{min} \gets \emptyset$
+        \State $d_{min} \gets $ \Call{Vector}{$\infty$}
+        \State $S \gets $ \Call{ProperSubsets}{$V$}
+        \For{$V_s \in S$}
+            \State $d \gets $ \Call{SimplexToOrigin}{$V_s$}
+            \If{$|d| < |d_{min}|$}
+                \State $d_{min} \gets d$
+                \State $V_{min} \gets V_s$
+            \EndIf
+        \EndFor
+        \State \Return $V_{min}$, $d_{min}$
+    \EndFunction
+\end{algorithmic}
+
+\newpage
+
+\begin{algorithmic}
+    \Function{TriangleContainsOrigin}{$V$}
+        \State $a$, $b$, $c \gets V$
+        \State $n_{bc} \gets \perp(c - b)$
+        \State $n_{ca} \gets \perp(a - c)$
+        \If{$n_{bc} \cdot -c > 0$}
+            \State \Return false
+        \EndIf
+        \If{$n_{ca} \cdot -c > 0$}
+            \State \Return false
+        \EndIf
+        \State \Return true            
+    \EndFunction
+\end{algorithmic}
+
+
+\end{document}
